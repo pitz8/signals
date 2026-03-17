@@ -576,6 +576,9 @@ def check_open_signals():
 ##############################
 
 def check_secret():
+    # Vercel Cron sends this header automatically
+    if request.headers.get('x-vercel-cron') == '1':
+        return True
     if not CRON_SECRET:
         return True
     secret = request.headers.get('X-Cron-Secret') or request.args.get('secret', '')

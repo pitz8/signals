@@ -1,4 +1,8 @@
 {
+  "crons": [
+    { "path": "/api/scanner", "schedule": "*/15 * * * *" },
+    { "path": "/api/monitor", "schedule": "*/5 * * * *" }
+  ],
   "routes": [
     { "src": "/(.*)", "dest": "/api/server.py" }
   ]
