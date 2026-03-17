@@ -1,0 +1,25 @@
+name: Signal Cron Jobs
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # scanner every 15 min
+    - cron: '*/5 * * * *'    # monitor every 5 min
+  workflow_dispatch:          # manual trigger
+
+jobs:
+  scanner:
+    if: github.event.schedule == '*/15 * * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run scanner
+        run: |
+          curl -sf -X GET "${{ secrets.VERCEL_URL }}/api/scanner?secret=${{ secrets.CRON_SECRET }}" \
+            || echo "Scanner call failed"
+
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run monitor
+        run: |
+          curl -sf -X GET "${{ secrets.VERCEL_URL }}/api/monitor?secret=${{ secrets.CRON_SECRET }}" \
+            || echo "Monitor call failed"

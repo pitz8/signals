@@ -1,0 +1,7 @@
+flask
+ccxt
+pandas
+ta
+numpy
+requests
+psycopg2-binary
