@@ -1,5 +1,6 @@
 {
   "routes": [
+	{ "src": "/epstein/(.*)", "dest": "/api/epstein/server.py" },
     { "src": "/(.*)", "dest": "/api/server.py" }
   ]
 }
