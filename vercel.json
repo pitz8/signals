@@ -1,6 +1,6 @@
 {
   "routes": [
-	{ "src": "/epstein/(.*)", "dest": "/api/epstein/server.py" },
+	{ "src": "/epstein/(.*)", "dest": "/api/epstein/trading_bot.py" },
     { "src": "/(.*)", "dest": "/api/server.py" }
   ]
 }
