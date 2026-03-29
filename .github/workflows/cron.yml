@@ -19,3 +19,12 @@ jobs:
     steps:
       - name: Trigger monitor
         run: curl -sf "https://signals-ashy.vercel.app/api/monitor" || true
+      - name: Trigger monitor S2
+        run: curl -sf "https://signals-ashy.vercel.app/api/monitor2" || true
+
+  scanner2:
+    if: github.event.schedule == '*/15 * * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger scanner S2
+        run: curl -sf "https://signals-ashy.vercel.app/api/scanner2" || true

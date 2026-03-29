@@ -34,6 +34,41 @@
       font-size: 14px;
     }
 
+    /* ── TABS ───────────────────────────────── */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 8px 22px;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn.active {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .tab-btn.s1.active { color: var(--blue); }
+    .tab-btn.s2.active { color: var(--green); }
+    .tab-btn.s3.active { color: #a78bfa; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
     /* ── HEADER ─────────────────────────────── */
     header {
       display: flex;
@@ -84,7 +119,7 @@
     /* ── STAT CARDS ──────────────────────────── */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
       margin-bottom: 32px;
     }
@@ -295,6 +330,90 @@
     /* Empty state */
     .empty { text-align:center; padding: 48px 20px; color: var(--muted); font-size:13px; }
 
+    /* ── EXPANDABLE DETAILS ──────────────────── */
+    .position-card { cursor: pointer; }
+    .pos-details {
+      display: none;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .position-card.expanded .pos-details { display: block; }
+
+    .details-liquidity {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-family: var(--mono);
+    }
+    .details-liquidity span { color: var(--blue); }
+
+    .tf-rows { display: flex; flex-direction: column; gap: 7px; }
+
+    .tf-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .tf-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--muted);
+      width: 28px;
+      flex-shrink: 0;
+    }
+
+    .ind-pill {
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .ind-pill.green  { background: var(--green-dim); color: var(--green); }
+    .ind-pill.red    { background: var(--red-dim);   color: var(--red);   }
+    .ind-pill.yellow { background: var(--yellow-dim);color: var(--yellow);}
+    .ind-pill.blue   { background: var(--blue-dim);  color: var(--blue);  }
+    .ind-pill.muted  { background: var(--surface2);  color: var(--muted); }
+
+    .tf-signals {
+      font-size: 10px;
+      color: var(--yellow);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .expand-hint {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+    .position-card.expanded .expand-hint { display: none; }
+
+    .close-btn {
+      margin-top: 12px;
+      width: 100%;
+      padding: 8px;
+      background: rgba(255,71,87,0.12);
+      border: 1px solid rgba(255,71,87,0.3);
+      border-radius: 8px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .close-btn:hover { background: rgba(255,71,87,0.22); }
+
     /* ── PER ASSET ────────────────────────────── */
     .asset-grid {
       display: grid;
@@ -358,6 +477,31 @@
     .outcome-pill.open { background: var(--blue-dim); color: var(--blue); }
     .outcome-pill.expired { background: var(--surface2); color: var(--muted); }
 
+    /* ── HISTORY CARDS (mobile) ──────────────── */
+    .history-cards { display: none; margin-bottom: 40px; }
+    .hcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hcard-left { flex: 1; min-width: 0; }
+    .hcard-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    .hcard-asset { font-weight: 800; font-size: 15px; font-family: var(--mono); }
+    .hcard-meta { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hcard-right { text-align: right; flex-shrink: 0; }
+    .hcard-entry { font-family: var(--mono); font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .hcard-dur { font-size: 11px; color: var(--muted); }
+
     /* ── SPINNER ─────────────────────────────── */
     .spinner {
       display:inline-block; width:16px; height:16px;
@@ -367,15 +511,52 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── RESPONSIVE ──────────────────────────── */
+
+    /* Table always scrollable */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 640px; }
+
     @media (max-width: 900px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
     @media (max-width: 560px) {
-      body { padding: 14px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .table-wrap, .table-hint { display: none !important; }
+      .history-cards { display: block; }
+      body { padding: 12px; font-size: 13px; }
+
+      /* Header: compact, single line */
+      header { margin-bottom: 18px; padding-bottom: 14px; }
+      .logo-title { font-size: 14px; letter-spacing: 2px; }
+      .header-meta .refresh-hint { display: none; }
+      .header-meta { gap: 10px; }
+
+      /* Stats: 2x2+1, tighter */
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
+      .stat-card.pnl-card { grid-column: span 2; }
+      .stat-card { padding: 14px; border-radius: 10px; }
       .stat-value { font-size: 22px; }
-      .positions-grid { grid-template-columns: 1fr; }
-      header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .stat-sub { font-size: 10px; }
+
+      /* Positions */
+      .positions-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 24px; }
+      .position-card { padding: 14px; border-radius: 10px; }
+      .pos-asset { font-size: 20px; }
+      .price-val { font-size: 12px; }
+      .price-label { font-size: 8px; }
+      .progress-labels { font-size: 9px; }
+      .pos-footer { flex-wrap: wrap; gap: 6px; }
+
+      /* Asset grid */
+      .asset-grid { gap: 8px; margin-bottom: 24px; }
+      .asset-card { padding: 14px; border-radius: 10px; }
+      .asset-wr { font-size: 24px; }
+
+      /* Section headers */
+      .section-header { margin-bottom: 10px; }
+
+      /* Table hint */
+      .table-hint { display: block; }
     }
   </style>
 </head>
@@ -387,10 +568,20 @@
     <span class="logo-title">Signals Terminal</span>
   </div>
   <div class="header-meta">
-    <span>Auto-refresh 30s</span>
+    <span class="refresh-hint">Auto-refresh 30s</span>
     <span class="clock" id="clock">--:--:-- UTC</span>
   </div>
 </header>
+
+<!-- Tab bar -->
+<div class="tab-bar">
+  <button class="tab-btn s1 active" onclick="switchTab('s1')">Strat 1 · MTF</button>
+  <button class="tab-btn s2" onclick="switchTab('s2')">Strat 2 · 15m</button>
+  <button class="tab-btn s3" onclick="switchTab('s3')">Strat 3 · Inverted</button>
+</div>
+
+<!-- ═══════════════ STRAT 1 ═══════════════ -->
+<div id="tab-s1" class="tab-content active">
 
 <!-- Stats -->
 <div class="stats-grid">
@@ -414,6 +605,21 @@
     <div class="stat-value" id="s-open" style="color:var(--text)">--</div>
     <div class="stat-sub">being monitored</div>
   </div>
+  <div class="stat-card c-green pnl-card" id="pnl-card">
+    <div class="stat-label">Total P&amp;L</div>
+    <div class="stat-value c-green" id="s-pnl">--</div>
+    <div class="stat-sub" id="s-pnl-sub">live · all trades</div>
+  </div>
+  <div class="stat-card c-blue">
+    <div class="stat-label">Budget</div>
+    <div class="stat-value c-blue" id="s-budget">--</div>
+    <div class="stat-sub" id="s-budget-sub">of $2,000 starting</div>
+  </div>
+  <div class="stat-card c-yellow">
+    <div class="stat-label">Margin Locked</div>
+    <div class="stat-value c-yellow" id="s-margin">--</div>
+    <div class="stat-sub" id="s-margin-sub">25x leverage · 1 ETH</div>
+  </div>
 </div>
 
 <!-- Open positions -->
@@ -435,6 +641,7 @@
 <div class="section-header">
   <div class="section-title">Signal History</div>
 </div>
+<div class="history-cards" id="history-cards"></div>
 <div class="table-wrap">
   <table>
     <thead>
@@ -449,6 +656,124 @@
     </tbody>
   </table>
 </div>
+
+</div><!-- /tab-s1 -->
+
+<!-- ═══════════════ STRAT 2 ═══════════════ -->
+<div id="tab-s2" class="tab-content">
+
+<div class="stats-grid">
+  <div class="stat-card c-green">
+    <div class="stat-label">Win Rate</div>
+    <div class="stat-value c-green" id="s2-wr">--</div>
+    <div class="stat-sub" id="s2-wr-sub">No data yet</div>
+  </div>
+  <div class="stat-card c-blue">
+    <div class="stat-label">Total Signals</div>
+    <div class="stat-value c-blue" id="s2-total">--</div>
+    <div class="stat-sub" id="s2-total-sub">--</div>
+  </div>
+  <div class="stat-card c-yellow">
+    <div class="stat-label">Avg Duration</div>
+    <div class="stat-value c-yellow" id="s2-dur">--</div>
+    <div class="stat-sub">per trade</div>
+  </div>
+  <div class="stat-card c-red">
+    <div class="stat-label">Open Trades</div>
+    <div class="stat-value" id="s2-open" style="color:var(--text)">--</div>
+    <div class="stat-sub">max 3</div>
+  </div>
+  <div class="stat-card c-green pnl-card" id="s2-pnl-card">
+    <div class="stat-label">Total P&amp;L</div>
+    <div class="stat-value c-green" id="s2-pnl">--</div>
+    <div class="stat-sub" id="s2-pnl-sub">closed trades</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Open Positions · ETH 15m</div>
+  <div class="badge" id="s2-open-badge">0</div>
+</div>
+<div class="positions-grid" id="s2-positions-grid">
+  <div class="empty">No open S2 trades</div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Signal History</div>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Side</th><th>Entry</th><th>TP</th><th>SL</th><th>Score</th>
+        <th>Outcome</th><th>P&amp;L</th><th>Duration</th><th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="s2-history-body">
+      <tr><td colspan="10" class="empty">No history yet</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /tab-s2 -->
+
+<!-- ═══════════════ STRAT 3 ═══════════════ -->
+<div id="tab-s3" class="tab-content">
+
+<div class="stats-grid">
+  <div class="stat-card" style="border-color:#a78bfa40">
+    <div class="stat-label">Win Rate</div>
+    <div class="stat-value" style="color:#a78bfa" id="s3-wr">--</div>
+    <div class="stat-sub" id="s3-wr-sub">No data yet</div>
+  </div>
+  <div class="stat-card c-blue">
+    <div class="stat-label">Total Signals</div>
+    <div class="stat-value c-blue" id="s3-total">--</div>
+    <div class="stat-sub" id="s3-total-sub">--</div>
+  </div>
+  <div class="stat-card c-yellow">
+    <div class="stat-label">Avg Duration</div>
+    <div class="stat-value c-yellow" id="s3-dur">--</div>
+    <div class="stat-sub">per trade</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Open Trades</div>
+    <div class="stat-value" id="s3-open" style="color:var(--text)">--</div>
+    <div class="stat-sub">max 3 · ETH/BTC/SOL</div>
+  </div>
+  <div class="stat-card pnl-card c-green" id="s3-pnl-card">
+    <div class="stat-label">Total P&amp;L</div>
+    <div class="stat-value c-green" id="s3-pnl">--</div>
+    <div class="stat-sub" id="s3-pnl-sub">closed trades</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Open Positions · ETH / BTC / SOL</div>
+  <div class="badge" id="s3-open-badge">0</div>
+</div>
+<div class="positions-grid" id="s3-positions-grid">
+  <div class="empty">No open S3 trades</div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Signal History</div>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Asset</th><th>Side</th><th>Entry</th><th>TP</th><th>SL</th><th>ATR</th><th>Score</th>
+        <th>Outcome</th><th>P&amp;L</th><th>Duration</th><th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="s3-history-body">
+      <tr><td colspan="12" class="empty">No history yet</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /tab-s3 -->
 
 <script>
 const priceCache = {};
@@ -492,6 +817,45 @@ function fmtDate(iso) {
        + ' ' + d.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' });
 }
 
+function renderDetails(details, netScore) {
+  if (!details) return '';
+  const liq = details.liquidity || '';
+  const mtf = details.mtf || {};
+  const ind = details.indicators || {};
+  const tfs = ['1d','4h','1h','15m'];
+
+  const rsiColor = r => r == null ? 'muted' : r > 70 ? 'red' : r < 30 ? 'green' : 'yellow';
+  const macdColor = v => v == null ? 'muted' : v > 0 ? 'green' : 'red';
+  const emaColor = t => t === 'bull' ? 'green' : t === 'bear' ? 'red' : 'muted';
+  const volColor = v => v == null ? 'muted' : v > 2.5 ? 'yellow' : 'muted';
+
+  const rows = tfs.map(tf => {
+    const i = ind[tf] || {};
+    const m = mtf[tf] || {};
+    const rsi = i.rsi != null ? `RSI ${i.rsi}` : 'RSI --';
+    const macd = i.macd_diff != null ? `MACD ${i.macd_diff > 0 ? '▲' : '▼'}` : 'MACD --';
+    const ema = i.ema_trend ? `EMA ${i.ema_trend.toUpperCase()}` : 'EMA --';
+    const adx = i.adx != null ? `ADX ${i.adx}` : '';
+    const vol = i.vol_spike != null ? `VOL ${i.vol_spike}x` : '';
+    const sigs = m.signals && m.signals !== 'Neutral' ? m.signals : '';
+    return `<div class="tf-row">
+      <span class="tf-label">${tf.toUpperCase()}</span>
+      <span class="ind-pill ${rsiColor(i.rsi)}">${rsi}</span>
+      <span class="ind-pill ${macdColor(i.macd_diff)}">${macd}</span>
+      <span class="ind-pill ${emaColor(i.ema_trend)}">${ema}</span>
+      ${adx ? `<span class="ind-pill muted">${adx}</span>` : ''}
+      ${vol && i.vol_spike > 2 ? `<span class="ind-pill yellow">${vol}</span>` : ''}
+      ${sigs ? `<span class="tf-signals">${sigs}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  const scoreColor = netScore >= 3 ? 'green' : netScore <= -3 ? 'red' : 'muted';
+  return `<div class="pos-details">
+    <div class="details-liquidity">🌊 ${liq} &nbsp;·&nbsp; Score: <span>${netScore >= 0 ? '+' : ''}${netScore}</span></div>
+    <div class="tf-rows">${rows}</div>
+  </div>`;
+}
+
 function progress(tp, sl, cur, isBuy) {
   const range = Math.abs(tp - sl);
   if (!range) return 50;
@@ -510,8 +874,10 @@ async function renderPositions(trades) {
 
   if (!trades.length) {
     grid.innerHTML = '<div class="empty">No open trades — waiting for next signal</div>';
-    return;
+    return { pnlSum: 0, pnlCount: 0 };
   }
+
+  let openPnlSum = 0, openPnlCount = 0;
 
   const cards = await Promise.all(trades.map(async t => {
     const isBuy = t.signal_type.includes('BUY');
@@ -519,8 +885,14 @@ async function renderPositions(trades) {
     const pct = cur != null
       ? (isBuy ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * 100
       : null;
+    const ethPos = (t.margin_used || 0) * 25;
+    const pnlUsd = cur != null && ethPos > 0
+      ? (isBuy ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * ethPos
+      : null;
+    if (pct != null) { openPnlSum += pct; openPnlCount++; }
     const pctClass = pct == null ? 'neutral' : pct > 0 ? 'pos' : pct < 0 ? 'neg' : 'neutral';
     const pctStr = pct == null ? '--' : (pct >= 0 ? '▲' : '▼') + ' ' + Math.abs(pct).toFixed(2) + '%';
+    const pnlUsdStr = pnlUsd == null ? '' : (pnlUsd >= 0 ? '+$' : '-$') + Math.abs(pnlUsd).toFixed(2);
     const prog = cur != null ? progress(t.tp, t.sl, cur, isBuy) : 50;
 
     const pnlClass = pct == null ? 'pnl-neutral' : pct > 0 ? 'pnl-pos' : 'pnl-neg';
@@ -558,11 +930,30 @@ async function renderPositions(trades) {
       </div>
       <div class="pos-footer">
         <span class="age-label">⏱ ${fmtAge(t.opened_at)} ago · #${t.id}</span>
-        <span class="move-badge ${pctClass}">${pctStr}</span>
+        <span class="move-badge ${pctClass}">${pctStr}${pnlUsdStr ? ` <span style="opacity:.75;font-size:10px">${pnlUsdStr}</span>` : ''}</span>
+      </div>
+      ${t.liq_price ? `<div style="margin-top:10px;padding:6px 10px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.2);border-radius:8px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--red);text-transform:uppercase">💥 Liq Price</span>
+        <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--red)">${fmtPrice(t.liq_price, t.asset)}</span>
+        ${t.margin_used ? `<span style="font-size:10px;color:var(--muted)">margin $${t.margin_used.toFixed(0)}</span>` : ''}
+      </div>` : ''}
+      ${renderDetails(t.details, t.net_score)}
+      <div class="expand-hint">tap for analysis ▾</div>
+      <div style="display:flex;gap:6px;margin-top:12px" onclick="event.stopPropagation()">
+        <button class="close-btn" style="background:rgba(0,214,143,.1);border-color:rgba(0,214,143,.3);color:var(--green)" onclick="closeSignal(${t.id},'TP',this)">✅ TP</button>
+        <button class="close-btn" style="background:rgba(255,71,87,.1);border-color:rgba(255,71,87,.3);color:var(--red)" onclick="closeSignal(${t.id},'SL',this)">❌ SL</button>
+        <button class="close-btn" style="flex:2" onclick="closeSignal(${t.id},'MANUAL',this)">🛑 Manual</button>
       </div>
     </div>`;
   }));
   grid.innerHTML = cards.join('');
+
+  // Expand on click
+  grid.querySelectorAll('.position-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('expanded'));
+  });
+
+  return { pnlSum: openPnlSum, pnlCount: openPnlCount };
 }
 
 function renderStats(s) {
@@ -584,26 +975,59 @@ function renderStats(s) {
       return `<div class="asset-card">
         <div class="asset-name">${asset}</div>
         <div class="asset-wr">${wr}%</div>
-        <div class="asset-detail">${d.tp}✅ ${d.sl}❌ ${d.expired||0}⏳ / ${d.total} total</div>
+        <div class="asset-detail">${d.tp}✅ ${d.sl}❌ ${d.expired||0}⏳ ${d.reversed||0}🔄 ${d.manual||0}🛑 / ${d.total} total</div>
       </div>`;
     }).join('');
   }
 }
 
 function renderHistory(signals) {
+  // Mobile cards
+  const cards = document.getElementById('history-cards');
+  if (!signals || !signals.length) {
+    cards.innerHTML = '<div class="empty muted">No signals yet</div>';
+  } else {
+    cards.innerHTML = signals.map(s => {
+      const isBuy = s.signal_type.includes('BUY');
+      const oc = s.outcome;
+      const [ocClass, ocLabel] = oc === 'TP_HIT'           ? ['tp','✅ TP']
+                               : oc === 'SL_HIT'           ? ['sl','❌ SL']
+                               : oc === 'EXPIRED'          ? ['expired','⏳ EXP']
+                               : oc === 'CLOSED_REVERSED'  ? ['sl','🔄 REV']
+                               : ['open','🔵 Open'];
+      return `<div class="hcard">
+        <div class="hcard-left">
+          <div class="hcard-top">
+            <span class="hcard-asset">${s.asset}</span>
+            <span class="sig-badge ${isBuy?'buy':'sell'}" style="font-size:9px;padding:3px 8px">${cleanSignal(s.signal_type)}</span>
+            <span class="outcome-pill ${ocClass}">${ocLabel}</span>
+          </div>
+          <div class="hcard-meta">${fmtDate(s.opened_at)} · ${fmtDur(s.duration_hours)}</div>
+        </div>
+        <div class="hcard-right">
+          <div class="hcard-entry">$${Number(s.entry_price).toLocaleString()}</div>
+          <div class="hcard-dur" style="color:var(--green)">TP $${Number(s.tp).toLocaleString()}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
   const tbody = document.getElementById('history-body');
   if (!signals || !signals.length) {
     tbody.innerHTML = '<tr><td colspan="9" class="empty muted">No signals yet</td></tr>';
     return;
   }
-  tbody.innerHTML = signals.map(s => {
+  const rows = signals.map(s => {
     const isBuy = s.signal_type.includes('BUY');
     const oc = s.outcome;
-    const [ocClass, ocLabel] = oc === 'TP_HIT'   ? ['tp','✅ TP HIT']
-                             : oc === 'SL_HIT'   ? ['sl','❌ SL HIT']
-                             : oc === 'EXPIRED'  ? ['expired','⏳ EXPIRED']
+    const [ocClass, ocLabel] = oc === 'TP_HIT'          ? ['tp','✅ TP HIT']
+                             : oc === 'SL_HIT'          ? ['sl','❌ SL HIT']
+                             : oc === 'EXPIRED'         ? ['expired','⏳ EXPIRED']
+                             : oc === 'CLOSED_REVERSED' ? ['sl','🔄 REVERSED']
                              : ['open','🔵 OPEN'];
-    return `<tr>
+    const detailHtml = s.details ? renderDetails(s.details, s.net_score) : '';
+    const hasDetails = !!s.details;
+    return `<tr class="hist-row${hasDetails ? ' has-details' : ''}" data-id="${s.id}" style="${hasDetails ? 'cursor:pointer' : ''}">
       <td class="mono muted">#${s.id}</td>
       <td><strong>${s.asset}</strong></td>
       <td><span class="sig-badge ${isBuy ? 'buy' : 'sell'}" style="font-size:10px">${cleanSignal(s.signal_type)}</span></td>
@@ -613,19 +1037,80 @@ function renderHistory(signals) {
       <td><span class="outcome-pill ${ocClass}">${ocLabel}</span></td>
       <td class="mono muted">${fmtDur(s.duration_hours)}</td>
       <td class="muted" style="font-size:11px">${fmtDate(s.opened_at)}</td>
-    </tr>`;
-  }).join('');
+    </tr>${hasDetails ? `<tr class="detail-row" id="detail-${s.id}" style="display:none"><td colspan="9" style="padding:0 16px 14px"><div style="padding:12px;background:var(--surface2);border-radius:10px">${detailHtml.replace('<div class="pos-details">', '<div class="pos-details" style="display:block;border-top:none;padding-top:0;margin-top:0">').replace('<div class="expand-hint">', '<div class="expand-hint" style="display:none">')}</div></td></tr>` : ''}`;
+  });
+  tbody.innerHTML = rows.join('');
+
+  // Expand rows on click
+  tbody.querySelectorAll('.hist-row.has-details').forEach(row => {
+    row.addEventListener('click', () => {
+      const id = row.dataset.id;
+      const detRow = document.getElementById(`detail-${id}`);
+      if (detRow) detRow.style.display = detRow.style.display === 'none' ? '' : 'none';
+    });
+  });
 }
 
 async function loadAll() {
   try {
-    const [sRes, oRes, hRes] = await Promise.all([
-      fetch('/api/stats'), fetch('/api/open'), fetch('/api/signals')
+    const [sRes, oRes, hRes, pRes] = await Promise.all([
+      fetch('/api/stats'), fetch('/api/open'), fetch('/api/signals'), fetch('/api/portfolio')
     ]);
-    const [stats, open, history] = await Promise.all([sRes.json(), oRes.json(), hRes.json()]);
+    const [stats, open, history, portfolio] = await Promise.all([sRes.json(), oRes.json(), hRes.json(), pRes.json()]);
     renderStats(stats);
-    await renderPositions(open);
+    const { pnlSum, pnlCount } = await renderPositions(open);
     renderHistory(history);
+
+    // Budget card
+    if (portfolio && portfolio.budget != null) {
+      const budget = portfolio.budget;
+      const startBudget = portfolio.starting_budget || 2000;
+      const budgetEl = document.getElementById('s-budget');
+      budgetEl.textContent = '$' + budget.toFixed(0);
+      budgetEl.className = 'stat-value ' + (budget >= startBudget ? 'c-blue' : budget < startBudget * 0.5 ? 'c-red' : 'c-yellow');
+      const pct = ((budget - startBudget) / startBudget * 100);
+      document.getElementById('s-budget-sub').textContent =
+        `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}% from start`;
+
+      // Margin locked = sum of margin_used on open trades
+      const marginLocked = open.reduce((s, t) => s + (t.margin_used || 0), 0);
+      document.getElementById('s-margin').textContent = marginLocked > 0 ? '$' + marginLocked.toFixed(0) : '$0';
+      document.getElementById('s-margin-sub').textContent =
+        marginLocked > 0 ? `${open.length} trade${open.length>1?'s':''} · 25x lev · 1 ETH each` : 'no open trades';
+    }
+
+    // Compute closed P&L from TP/SL hit trades
+    let closedPnl = 0, closedCount = 0;
+    for (const s of (history || [])) {
+      if (s.outcome === 'TP_HIT' || s.outcome === 'SL_HIT') {
+        const isBuy = s.signal_type.includes('BUY');
+        const entry = Number(s.entry_price);
+        const exit = s.outcome === 'TP_HIT' ? Number(s.tp) : Number(s.sl);
+        const pct = isBuy ? (exit - entry) / entry * 100 : (entry - exit) / entry * 100;
+        closedPnl += pct;
+        closedCount++;
+      }
+    }
+
+    const totalPnl = closedPnl + pnlSum;
+    const totalCount = closedCount + pnlCount;
+    const pnlEl = document.getElementById('s-pnl');
+    const pnlSubEl = document.getElementById('s-pnl-sub');
+    const pnlCard = document.getElementById('pnl-card');
+
+    if (totalCount === 0) {
+      pnlEl.textContent = '--';
+      pnlEl.className = 'stat-value c-green';
+      pnlSubEl.textContent = 'No trades yet';
+    } else {
+      const sign = totalPnl >= 0 ? '+' : '';
+      pnlEl.textContent = sign + totalPnl.toFixed(1) + '%';
+      const col = totalPnl >= 0 ? 'c-green' : 'c-red';
+      pnlEl.className = 'stat-value ' + col;
+      pnlCard.className = 'stat-card pnl-card ' + col;
+      const avg = totalPnl / totalCount;
+      pnlSubEl.textContent = `${totalCount} trades · avg ${avg >= 0 ? '+' : ''}${avg.toFixed(1)}% each`;
+    }
   } catch (e) { console.error(e); }
 }
 
@@ -638,6 +1123,268 @@ function tick() {
 }
 setInterval(tick, 1000);
 tick();
+
+async function closeSignal(id, type, btn) {
+  btn.disabled = true;
+  btn.textContent = '...';
+  try {
+    const outcomeMap = { TP: 'TP_HIT', SL: 'SL_HIT', MANUAL: 'CLOSED_MANUAL' };
+    const r = await fetch(`/api/close-signal/${id}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ outcome_type: type })
+    });
+    const d = await r.json();
+    if (d.error) { btn.textContent = '❌ ' + d.error; return; }
+    await loadAll();
+  } catch(e) { btn.textContent = '❌ Error'; }
+}
+
+// ── TAB SWITCHING ───────────────────────────────────────────────────────
+let activeTab = 's1';
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.tab-btn.${tab}`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  if (tab === 's2') loadS2();
+  if (tab === 's3') loadS3();
+}
+
+// ── STRAT 2 ─────────────────────────────────────────────────────────────
+function fmtPnl(v) {
+  if (v == null) return '--';
+  return (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2);
+}
+
+async function loadS2() {
+  try {
+    const [sRes, oRes, hRes] = await Promise.all([
+      fetch('/api/strat2/stats'), fetch('/api/strat2/open'), fetch('/api/strat2/signals')
+    ]);
+    const [stats, open, history] = await Promise.all([sRes.json(), oRes.json(), hRes.json()]);
+
+    // Stats
+    const wr = stats.win_rate || 0;
+    document.getElementById('s2-wr').textContent = stats.total ? wr.toFixed(1) + '%' : '--';
+    document.getElementById('s2-wr-sub').textContent = stats.total
+      ? `${stats.tp_hits}✅ ${stats.sl_hits}❌ of ${stats.tp_hits + stats.sl_hits}` : 'No data yet';
+    document.getElementById('s2-total').textContent = stats.total || '--';
+    document.getElementById('s2-total-sub').textContent = stats.total ? `${stats.tp_hits} TP · ${stats.sl_hits} SL` : '--';
+    const dur = stats.avg_duration || 0;
+    document.getElementById('s2-dur').textContent = dur > 0
+      ? (dur < 1 ? Math.round(dur * 60) + 'm' : dur.toFixed(1) + 'h') : '--';
+    document.getElementById('s2-open').textContent = open.length;
+    document.getElementById('s2-open-badge').textContent = open.length;
+
+    // P&L (closed)
+    const pnl = stats.total_pnl || 0;
+    const pnlEl = document.getElementById('s2-pnl');
+    const pnlCard = document.getElementById('s2-pnl-card');
+    const pnlSub = document.getElementById('s2-pnl-sub');
+    if (stats.tp_hits + stats.sl_hits > 0) {
+      pnlEl.textContent = (pnl >= 0 ? '+$' : '-$') + Math.abs(pnl).toFixed(2);
+      pnlEl.className = 'stat-value ' + (pnl >= 0 ? 'c-green' : 'c-red');
+      pnlCard.className = 'stat-card pnl-card ' + (pnl >= 0 ? 'c-green' : 'c-red');
+      pnlSub.textContent = `${stats.tp_hits + stats.sl_hits} closed trades`;
+    } else {
+      pnlEl.textContent = '--'; pnlEl.className = 'stat-value c-green';
+      pnlSub.textContent = 'No closed trades yet';
+    }
+
+    // Open positions
+    const grid = document.getElementById('s2-positions-grid');
+    if (!open.length) {
+      grid.innerHTML = '<div class="empty">No open S2 trades — waiting for next signal</div>';
+    } else {
+      const cards = await Promise.all(open.map(async t => {
+        const cur = await getPrice('ETH');
+        const isLong = t.signal_type === 'LONG';
+        const pct = cur != null ? (isLong ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * 100 : null;
+        const ethPos = (t.margin_used || 0) * 25;
+        const pnlUsd = cur != null && ethPos > 0
+          ? (isLong ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * ethPos : null;
+        const pctClass = pct == null ? 'neutral' : pct > 0 ? 'pos' : pct < 0 ? 'neg' : 'neutral';
+        const pctStr = pct == null ? '--' : (pct >= 0 ? '▲' : '▼') + ' ' + Math.abs(pct).toFixed(2) + '%';
+        const pnlStr = pnlUsd == null ? '' : (pnlUsd >= 0 ? '+$' : '-$') + Math.abs(pnlUsd).toFixed(2);
+        const sideColor = isLong ? 'var(--green)' : 'var(--red)';
+        const sideEmoji = isLong ? '🟢' : '🔴';
+        return `<div class="position-card">
+          <div class="pos-header">
+            <span class="asset-name">ETH</span>
+            <span class="signal-badge" style="background:${sideColor}20;color:${sideColor};border-color:${sideColor}40">${sideEmoji} ${t.signal_type}</span>
+          </div>
+          <div class="price-row">
+            <div class="price-item"><div class="price-label">Entry</div><div class="price-val entry mono">$${t.entry_price.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+            <div class="price-item"><div class="price-label">Current</div><div class="price-val mono">${cur != null ? '$'+cur.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--'}</div></div>
+            <div class="price-item"><div class="price-label">P&amp;L</div><div class="price-val ${pct==null?'pnl-neutral':pct>0?'pnl-pos':'pnl-neg'} mono">${pct != null ? (pct>=0?'+':'')+pct.toFixed(2)+'%' : '--'}</div></div>
+          </div>
+          <div class="pos-footer">
+            <span class="age-label">⏱ ${fmtAge(t.opened_at)} ago · S2#${t.id}</span>
+            <span class="move-badge ${pctClass}">${pctStr}${pnlStr ? ` <span style="opacity:.75;font-size:10px">${pnlStr}</span>` : ''}</span>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:6px">
+            <span style="font-size:10px;color:var(--muted)">TP: $${t.tp.toLocaleString('en',{minimumFractionDigits:2})} · SL: $${t.sl.toLocaleString('en',{minimumFractionDigits:2})} · Score: ${(t.score||0).toFixed(1)}/8.0</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="close-btn tp" onclick="closeSignalS2(${t.id},'TP',this)">✅ TP</button>
+            <button class="close-btn sl" onclick="closeSignalS2(${t.id},'SL',this)">❌ SL</button>
+            <button class="close-btn manual" onclick="closeSignalS2(${t.id},'MANUAL',this)">🛑 Manual</button>
+          </div>
+        </div>`;
+      }));
+      grid.innerHTML = cards.join('');
+    }
+
+    // History
+    const tbody = document.getElementById('s2-history-body');
+    if (!history.length) {
+      tbody.innerHTML = '<tr><td colspan="10" class="empty">No history yet</td></tr>';
+    } else {
+      tbody.innerHTML = history.map(s => {
+        const out = s.outcome || '--';
+        const outClass = out === 'TP_HIT' ? 'c-green' : out === 'SL_HIT' ? 'c-red' : 'c-yellow';
+        const dur = s.duration_hours != null
+          ? (s.duration_hours < 1 ? Math.round(s.duration_hours*60)+'m' : s.duration_hours.toFixed(1)+'h') : '--';
+        const dt = s.opened_at ? new Date(s.opened_at).toLocaleDateString('en',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '--';
+        const sideColor = s.signal_type === 'LONG' ? 'var(--green)' : 'var(--red)';
+        return `<tr>
+          <td class="mono" style="color:var(--muted)">S2#${s.id}</td>
+          <td><span style="color:${sideColor};font-weight:700">${s.signal_type}</span></td>
+          <td class="mono">$${Number(s.entry_price).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--green)">$${Number(s.tp).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--red)">$${Number(s.sl).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--muted)">${(s.score||0).toFixed(1)}</td>
+          <td><span class="${outClass}" style="font-weight:600">${out.replace('_',' ')}</span></td>
+          <td class="mono ${s.pnl_usd>=0?'c-green':'c-red'}">${fmtPnl(s.pnl_usd)}</td>
+          <td style="color:var(--muted)">${dur}</td>
+          <td style="color:var(--muted);font-size:11px">${dt}</td>
+        </tr>`;
+      }).join('');
+    }
+  } catch(e) { console.error('S2 load error:', e); }
+}
+
+async function closeSignalS2(id, type, btn) {
+  btn.disabled = true; btn.textContent = '...';
+  try {
+    const r = await fetch(`/api/close-signal-s2/${id}`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ outcome_type: type })
+    });
+    const d = await r.json();
+    if (d.error) { btn.textContent = '❌ ' + d.error; return; }
+    await loadS2();
+  } catch(e) { btn.textContent = '❌ Error'; }
+}
+
+setInterval(() => { if (activeTab === 's2') loadS2(); }, 30000);
+
+// ── STRAT 3 ─────────────────────────────────────────────────────────────
+async function loadS3() {
+  try {
+    const [sRes, oRes, hRes] = await Promise.all([
+      fetch('/api/strat3/stats'), fetch('/api/strat3/open'), fetch('/api/strat3/signals')
+    ]);
+    const [stats, open, history] = await Promise.all([sRes.json(), oRes.json(), hRes.json()]);
+
+    const wr = stats.win_rate || 0;
+    document.getElementById('s3-wr').textContent = stats.total ? wr.toFixed(1) + '%' : '--';
+    document.getElementById('s3-wr-sub').textContent = stats.total
+      ? `${stats.tp_hits}✅ ${stats.sl_hits}❌ of ${stats.tp_hits + stats.sl_hits}` : 'No data yet';
+    document.getElementById('s3-total').textContent = stats.total || '--';
+    document.getElementById('s3-total-sub').textContent = stats.total ? `${stats.tp_hits} TP · ${stats.sl_hits} SL` : '--';
+    const dur = stats.avg_duration || 0;
+    document.getElementById('s3-dur').textContent = dur > 0
+      ? (dur < 1 ? Math.round(dur * 60) + 'm' : dur.toFixed(1) + 'h') : '--';
+    document.getElementById('s3-open').textContent = open.length;
+    document.getElementById('s3-open-badge').textContent = open.length;
+
+    const pnl = stats.total_pnl || 0;
+    const pnlEl = document.getElementById('s3-pnl');
+    const pnlCard = document.getElementById('s3-pnl-card');
+    const pnlSub = document.getElementById('s3-pnl-sub');
+    if (stats.tp_hits + stats.sl_hits > 0) {
+      pnlEl.textContent = (pnl >= 0 ? '+$' : '-$') + Math.abs(pnl).toFixed(2);
+      pnlEl.className = 'stat-value ' + (pnl >= 0 ? 'c-green' : 'c-red');
+      pnlCard.className = 'stat-card pnl-card ' + (pnl >= 0 ? 'c-green' : 'c-red');
+      pnlSub.textContent = `${stats.tp_hits + stats.sl_hits} closed trades`;
+    } else {
+      pnlEl.textContent = '--'; pnlEl.className = 'stat-value c-green';
+      pnlSub.textContent = 'No closed trades yet';
+    }
+
+    const grid = document.getElementById('s3-positions-grid');
+    if (!open.length) {
+      grid.innerHTML = '<div class="empty">No open S3 trades — waiting for next signal</div>';
+    } else {
+      const cards = await Promise.all(open.map(async t => {
+        const cur = await getPrice(t.asset);
+        const isLong = t.signal_type === 'LONG';
+        const pct = cur != null ? (isLong ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * 100 : null;
+        const exposure = (t.margin_used || 0) * 25;
+        const pnlUsd = cur != null && exposure > 0
+          ? (isLong ? (cur - t.entry_price) : (t.entry_price - cur)) / t.entry_price * exposure : null;
+        const pctClass = pct == null ? 'neutral' : pct > 0 ? 'pos' : pct < 0 ? 'neg' : 'neutral';
+        const pctStr = pct == null ? '--' : (pct >= 0 ? '▲' : '▼') + ' ' + Math.abs(pct).toFixed(2) + '%';
+        const pnlStr = pnlUsd == null ? '' : (pnlUsd >= 0 ? '+$' : '-$') + Math.abs(pnlUsd).toFixed(2);
+        const sideColor = isLong ? 'var(--green)' : 'var(--red)';
+        const sideEmoji = isLong ? '🟢' : '🔴';
+        const curFmt = cur != null ? '$' + cur.toLocaleString('en', {minimumFractionDigits:2, maximumFractionDigits: t.asset==='BTC'?0:2}) : '--';
+        return `<div class="position-card">
+          <div class="pos-header">
+            <span class="asset-name">${t.asset}</span>
+            <span class="signal-badge" style="background:${sideColor}20;color:${sideColor};border-color:${sideColor}40">${sideEmoji} ${t.signal_type}</span>
+          </div>
+          <div class="price-row">
+            <div class="price-item"><div class="price-label">Entry</div><div class="price-val entry mono">$${Number(t.entry_price).toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+            <div class="price-item"><div class="price-label">Current</div><div class="price-val mono">${curFmt}</div></div>
+            <div class="price-item"><div class="price-label">P&amp;L</div><div class="price-val ${pct==null?'pnl-neutral':pct>0?'pnl-pos':'pnl-neg'} mono">${pct != null ? (pct>=0?'+':'')+pct.toFixed(2)+'%' : '--'}</div></div>
+          </div>
+          <div class="pos-footer">
+            <span class="age-label">⏱ ${fmtAge(t.opened_at)} ago · S3#${t.id}</span>
+            <span class="move-badge ${pctClass}">${pctStr}${pnlStr ? ` <span style="opacity:.75;font-size:10px">${pnlStr}</span>` : ''}</span>
+          </div>
+          <div style="margin-top:10px">
+            <span style="font-size:10px;color:var(--muted)">TP: $${Number(t.tp).toLocaleString('en',{minimumFractionDigits:2})} · SL: $${Number(t.sl).toLocaleString('en',{minimumFractionDigits:2})} · Score: ${(t.score||0).toFixed(1)} (inverted)</span>
+          </div>
+        </div>`;
+      }));
+      grid.innerHTML = cards.join('');
+    }
+
+    const tbody = document.getElementById('s3-history-body');
+    if (!history.length) {
+      tbody.innerHTML = '<tr><td colspan="12" class="empty">No history yet</td></tr>';
+    } else {
+      tbody.innerHTML = history.map(s => {
+        const out = s.outcome || '--';
+        const outClass = out === 'TP_HIT' ? 'c-green' : out === 'SL_HIT' ? 'c-red' : 'c-yellow';
+        const dur = s.duration_hours != null
+          ? (s.duration_hours < 1 ? Math.round(s.duration_hours*60)+'m' : s.duration_hours.toFixed(1)+'h') : '--';
+        const dt = s.opened_at ? new Date(s.opened_at).toLocaleDateString('en',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '--';
+        const sideColor = s.signal_type === 'LONG' ? 'var(--green)' : 'var(--red)';
+        return `<tr>
+          <td class="mono" style="color:var(--muted)">S3#${s.id}</td>
+          <td style="font-weight:700;color:var(--text)">${s.asset}</td>
+          <td><span style="color:${sideColor};font-weight:700">${s.signal_type}</span></td>
+          <td class="mono">$${Number(s.entry_price).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--green)">$${Number(s.tp).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--red)">$${Number(s.sl).toLocaleString('en',{minimumFractionDigits:2})}</td>
+          <td class="mono" style="color:var(--muted)">${s.atr_used != null ? '$'+Number(s.atr_used).toFixed(2) : '--'}</td>
+          <td class="mono" style="color:var(--muted)">${(s.score||0).toFixed(1)}</td>
+          <td><span class="${outClass}" style="font-weight:600">${out.replace('_',' ')}</span></td>
+          <td class="mono ${s.pnl_usd>=0?'c-green':'c-red'}">${fmtPnl(s.pnl_usd)}</td>
+          <td style="color:var(--muted)">${dur}</td>
+          <td style="color:var(--muted);font-size:11px">${dt}</td>
+        </tr>`;
+      }).join('');
+    }
+  } catch(e) { console.error('S3 load error:', e); }
+}
+
+setInterval(() => { if (activeTab === 's3') loadS3(); }, 30000);
 
 setInterval(loadAll, 30000);
 loadAll();

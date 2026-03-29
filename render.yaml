@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: signals-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn api.server:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1
+    envVars:
+      - key: POSTGRES_URL
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  - type: cron
+    name: scanner-15m
+    runtime: python
+    schedule: "*/15 * * * *"
+    buildCommand: pip install requests
+    startCommand: python -c "import requests,os; requests.get('https://signals-bot.onrender.com/api/scanner', timeout=30); requests.get('https://signals-bot.onrender.com/api/scanner2', timeout=30); requests.get('https://signals-bot.onrender.com/api/scanner3', timeout=30)"
+
+  - type: cron
+    name: monitor-5m
+    runtime: python
+    schedule: "*/5 * * * *"
+    buildCommand: pip install requests
+    startCommand: python -c "import requests; requests.get('https://signals-bot.onrender.com/api/monitor', timeout=30); requests.get('https://signals-bot.onrender.com/api/monitor2', timeout=30); requests.get('https://signals-bot.onrender.com/api/monitor3', timeout=30)"
